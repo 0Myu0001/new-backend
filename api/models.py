@@ -14,23 +14,23 @@ class User (models.Model):
   )
 
   user_name = models.CharField(
-      verbose_name='user_name',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='user_name',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   user_email = models.CharField(
-      verbose_name='user_email',
-      blank=True,
-      null=True,
-      max_length=254,
-      default='',
+    verbose_name='user_email',
+    blank=True,
+    null=True,
+    max_length=254,
+    default='',
   )
 
   def __str__(self):
-      return self.user_id
+    return self.user_id
   
 class User_Strict_Information (models.Model):
   class meta:
@@ -45,46 +45,46 @@ class User_Strict_Information (models.Model):
   )
 
   user_email = models.CharField(
-      verbose_name='user_email',
-      blank=True,
-      null=True,
-      max_length=254,
-      default='',
+    verbose_name='user_email',
+    blank=True,
+    null=True,
+    max_length=254,
+    default='',
   )
 
   user_real_name = models.CharField(
-      verbose_name='user_real_name',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='user_real_name',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   user_phone_number = models.CharField(
-      verbose_name='user_phone_number',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='user_phone_number',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   user_age = models.IntegerField(
-      verbose_name='user_age',
-      blank=True,
-      null=True,
-      default=0,
+    verbose_name='user_age',
+    blank=True,
+    null=True,
+    default=0,
   )
 
   user_password = models.CharField(
-      verbose_name='user_password',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='user_password',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   def __str__(self):
-      return self.user_id
+    return self.user_id
   
 class User_Experience (models.Model):
   class meta:
@@ -107,15 +107,15 @@ class User_Experience (models.Model):
   )
 
   liked = models.CharField(
-      verbose_name='user_experience_title',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='user_experience_title',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   def __str__(self):
-      return self.user_experience_id
+    return self.user_experience_id
   
 class Playlist (models.Model):
   class meta:
@@ -138,15 +138,15 @@ class Playlist (models.Model):
   )
 
   playlist_name = models.CharField(
-      verbose_name='playlist_name',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='playlist_name',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   def __str__(self):
-      return self.play_list_id
+    return self.play_list_id
   
 class Notification (models.Model):
   class meta:
@@ -169,15 +169,15 @@ class Notification (models.Model):
   )
 
   notification_content = models.CharField(
-      verbose_name='notification_content',
-      blank=True,
-      null=True,
-      max_length=1000,
-      default='',
+    verbose_name='notification_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
   )
 
   def __str__(self):
-      return self.notification_id
+    return self.notification_id
 
 class Post (models.Model):
   class meta:
@@ -199,45 +199,52 @@ class Post (models.Model):
     default='',
   )
 
+  post = models.FileField(
+    verbose_name='post',
+    blank=True,
+    null=True,
+    upload_to='posts/',
+  )
+
   post_title = models.CharField(
-      verbose_name='post_title',
-      blank=True,
-      null=True,
-      max_length=30,
-      default='',
+    verbose_name='post_title',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
   )
 
   post_image = models.ImageField(
-      verbose_name='post_image',
-      blank=True,
-      null=True,
-      upload_to='images/',
+    verbose_name='post_image',
+    blank=True,
+    null=True,
+    upload_to='images/',
   )
 
   post_played_times = models.IntegerField(
-      verbose_name='post_played_times',
-      blank=True,
-      null=True,
-      default=0,
+    verbose_name='post_played_times',
+    blank=True,
+    null=True,
+    default=0,
   )
 
   post_loved_number = models.IntegerField(
-      verbose_name='post_loved_number',
-      blank=True,
-      null=True,
-      default=0,
+    verbose_name='post_loved_number',
+    blank=True,
+    null=True,
+    default=0,
   )
 
   post_content = models.CharField(
-      verbose_name='post_content',
-      blank=True,
-      null=True,
-      max_length=1000,
-      default='',
+    verbose_name='post_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
   )
 
   def __str__(self):
-      return self.post_id
+    return self.post_id
 
 class Post_Comments (models.Model):
   class meta:
@@ -268,11 +275,11 @@ class Post_Comments (models.Model):
   )
 
   comment_content = models.CharField(
-      verbose_name='comment_content',
-      blank=True,
-      null=True,
-      max_length=1000,
-      default='',
+    verbose_name='comment_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
   )
 
   def __str__(self):
@@ -299,13 +306,13 @@ class Post_Detail (models.Model):
   )
 
   post_detail_content = models.CharField(
-      verbose_name='post_detail_content',
-      blank=True,
-      null=True,
-      max_length=1000,
-      default='',
+    verbose_name='post_detail_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
   )
 
   def __str__(self):
-      return self.post_detail_id
+    return self.post_detail_id
 
