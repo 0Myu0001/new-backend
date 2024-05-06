@@ -1,12 +1,5 @@
 from rest_framework import serializers
-from .models import User
-from .models import User_Strict_Information
-from .models import User_Experience
-from .models import Playlist
-from .models import Notification
-from .models import Post
-from .models import Post_Comments
-from .models import Post_Detail
+from .models import *
 
 class UserSerializer(serializers.ModelSerializer):
   class Meta:

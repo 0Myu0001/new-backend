@@ -1,21 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, routers
-from .models import User
-from .models import User_Strict_Information
-from .models import User_Experience
-from .models import Playlist
-from .models import Notification
-from .models import Post
-from .models import Post_Comments
-from .models import Post_Detail
-from .serializers import UserSerializer
-from .serializers import User_Strict_InformationSerializer
-from .serializers import User_ExperienceSerializer
-from .serializers import PlaylistSerializer
-from .serializers import NotificationSerializer
-from .serializers import PostSerializer
-from .serializers import Post_CommentsSerializer
-from .serializers import Post_DetailSerializer
+from .models import *
+from .serializers import *
 
 # Create your views here.
 

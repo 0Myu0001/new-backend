@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -91,7 +91,9 @@ DATABASES = {
     }
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 USE_TZ = False
+
 SECRET_KEY = 'django_tests_secret_key'
 
 # Password validation
