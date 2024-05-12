@@ -144,6 +144,12 @@ class Playlist (models.Model):
     max_length=30,
     default='',
   )
+  playlist_image = models.ImageField(
+    verbose_name='playlist_image',
+    blank=True,
+    null=True,
+    upload_to='playlist_images/',
+  )
 
   def __str__(self):
     return self.play_list_id
