@@ -29,9 +29,82 @@ class User (models.Model):
     default='',
   )
 
+  user_image = models.ImageField(
+    verbose_name='user_image',
+    blank=True,
+    null=True,
+    upload_to='user_images/',
+  )
+
+  follower_number = models.IntegerField(
+    verbose_name='follower_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  following_number = models.IntegerField(
+    verbose_name='following_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+  
+  listened_number = models.IntegerField(
+    verbose_name='listened_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
   def __str__(self):
     return self.user_id
   
+class User_Followers(models.Model):
+  class Meta:
+    db_table = 'user_followers'
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  follower_id = models.CharField(
+    verbose_name='follower_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  def __str__(self):
+    return self.user_id
+  
+class User_Followings(models.Model):
+  class Meta:
+    db_table = 'user_followings'
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  following_id = models.CharField(
+    verbose_name='following_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  def __str__(self):
+    return self.user_id
+
+
 class User_Strict_Information (models.Model):
   class meta:
     db_table = 'user_strict_information'
@@ -49,14 +122,6 @@ class User_Strict_Information (models.Model):
     blank=True,
     null=True,
     max_length=254,
-    default='',
-  )
-
-  user_real_name = models.CharField(
-    verbose_name='user_real_name',
-    blank=True,
-    null=True,
-    max_length=30,
     default='',
   )
 
@@ -85,105 +150,7 @@ class User_Strict_Information (models.Model):
 
   def __str__(self):
     return self.user_id
-  
-class User_Experience (models.Model):
-  class meta:
-    db_table = 'user_experience'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  recent = models.CharField(
-    verbose_name='user_experience_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  liked = models.CharField(
-    verbose_name='user_experience_title',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  def __str__(self):
-    return self.user_experience_id
-  
-class Playlist (models.Model):
-  class meta:
-    db_table = 'playlist'
-
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  playlist_id = models.CharField(
-    verbose_name='playlist_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  playlist_name = models.CharField(
-    verbose_name='playlist_name',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-  playlist_image = models.ImageField(
-    verbose_name='playlist_image',
-    blank=True,
-    null=True,
-    upload_to='playlist_images/',
-  )
-
-  def __str__(self):
-    return self.play_list_id
-  
-class Notification (models.Model):
-  class meta:
-    db_table = 'notification'
-
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  notification_id = models.CharField(
-    verbose_name='notification_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  notification_content = models.CharField(
-    verbose_name='notification_content',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-    return self.notification_id
 
 class Post (models.Model):
   class meta:
@@ -241,8 +208,30 @@ class Post (models.Model):
     default=0,
   )
 
-  post_content = models.CharField(
-    verbose_name='post_content',
+  post_comment_number = models.IntegerField(
+    verbose_name='post_comment_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  post_saved_number = models.IntegerField(
+    verbose_name='post_saved_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  post_detail = models.CharField(
+    verbose_name='post_detail',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
+  )
+
+  post_tags = models.CharField(
+    verbose_name='post_tags',
     blank=True,
     null=True,
     max_length=1000,
@@ -251,6 +240,7 @@ class Post (models.Model):
 
   def __str__(self):
     return self.post_id
+
 
 class Post_Comments (models.Model):
   class meta:
@@ -291,9 +281,17 @@ class Post_Comments (models.Model):
   def __str__(self):
       return self.comment_id
   
-class Post_Detail (models.Model):
+class Post_Loved (models.Model):
   class meta:
-    db_table = 'post_detail'
+    db_table = 'post_loved'
+
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
 
   post_id = models.CharField(
     verbose_name='post_id',
@@ -303,16 +301,96 @@ class Post_Detail (models.Model):
     default='',
   )
 
-  post_detail_id = models.CharField(
-    verbose_name='post_detail_id',
+  loved_by_user_id = models.CharField(
+    verbose_name='loved_by_user_id',
     blank=True,
     null=True,
     max_length=30,
     default='',
   )
 
-  post_detail_content = models.CharField(
-    verbose_name='post_detail_content',
+  def __str__(self):
+    return self.post_id
+
+
+class Playlist (models.Model):
+  class meta:
+    db_table = 'playlist'
+
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  playlist_id = models.CharField(
+    verbose_name='playlist_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  playlist_title = models.CharField(
+    verbose_name='playlist_name',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  playlist_image = models.ImageField(
+    verbose_name='playlist_image',
+    blank=True,
+    null=True,
+    upload_to='playlist_images/',
+  )
+
+  public = models.BooleanField(
+    verbose_name='public',
+    default=True,
+  )
+
+  playlist_played_times = models.IntegerField(
+    verbose_name='playlist_played_times',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  playlist_loved_number = models.IntegerField(
+    verbose_name='playlist_loved_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  playlist_comment_number = models.IntegerField(
+    verbose_name='playlist_comment_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  playlist_saved_number = models.IntegerField(
+    verbose_name='playlist_saved_number',
+    blank=True,
+    null=True,
+    default=0,
+  )
+
+  playlist_detail = models.CharField(
+    verbose_name='playlist_detail',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
+  )
+
+  playlist_attributes = models.CharField(
+    verbose_name='playlist_attributes',
     blank=True,
     null=True,
     max_length=1000,
@@ -320,5 +398,107 @@ class Post_Detail (models.Model):
   )
 
   def __str__(self):
-    return self.post_detail_id
+    return self.play_list_id
+
+class Playlist_Comments (models.Model):
+  class meta:
+    db_table = 'playlist_comments'
+
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  playlist_id = models.CharField(
+    verbose_name='playlist_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  comment_id = models.CharField(
+    verbose_name='comment_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  comment_content = models.CharField(
+    verbose_name='comment_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
+  )
+
+  def __str__(self):
+    return self.comment_id
+
+class Playlist_Loved (models.Model):
+  class meta:
+    db_table = 'playlist_loved'
+
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  playlist_id = models.CharField(
+    verbose_name='playlist_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  loved_by_user_id = models.CharField(
+    verbose_name='loved_by_user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  def __str__(self):
+    return self.playlist_id  
+
+
+class Notification (models.Model):
+  class meta:
+    db_table = 'notification'
+
+  user_id = models.CharField(
+    verbose_name='user_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  notification_id = models.CharField(
+    verbose_name='notification_id',
+    blank=True,
+    null=True,
+    max_length=30,
+    default='',
+  )
+
+  notification_content = models.CharField(
+    verbose_name='notification_content',
+    blank=True,
+    null=True,
+    max_length=1000,
+    default='',
+  )
+
+  def __str__(self):
+    return self.notification_id
 
