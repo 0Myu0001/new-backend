@@ -9,7 +9,7 @@ class User (models.Model):
     verbose_name='user_id',
     blank=True,
     null=True,
-    max_length=30,
+    max_length=25,
     default='',
   )
 
@@ -17,7 +17,7 @@ class User (models.Model):
     verbose_name='user_name',
     blank=True,
     null=True,
-    max_length=30,
+    max_length=25,
     default='',
   )
 
@@ -113,7 +113,7 @@ class User_Strict_Information (models.Model):
     verbose_name='user_id',
     blank=True,
     null=True,
-    max_length=30,
+    max_length=25,
     default='',
   )
 
@@ -133,11 +133,10 @@ class User_Strict_Information (models.Model):
     default='',
   )
 
-  user_age = models.IntegerField(
-    verbose_name='user_age',
+  user_birth = models.DateField(
+    verbose_name='user_birth',
     blank=True,
     null=True,
-    default=0,
   )
 
   user_password = models.CharField(
