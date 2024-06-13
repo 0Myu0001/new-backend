@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-nvv!#pz=ceow)68luz&h0h*c&8h_pv(qhvsi&=q777^m_*qgoq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -150,3 +150,6 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+# SESSION_ENGINE
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
