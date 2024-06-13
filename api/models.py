@@ -398,6 +398,10 @@ class Playlist (models.Model):
 
   def __str__(self):
     return self.play_list_id
+  
+class PlaylistPosts (models.Model):
+  playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+  post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 class Playlist_Comments (models.Model):
   class meta:
@@ -500,4 +504,3 @@ class Notification (models.Model):
 
   def __str__(self):
     return self.notification_id
-
