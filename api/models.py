@@ -8,9 +8,10 @@ class User (models.Model):
   user_id = models.CharField(
     verbose_name='user_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=25,
     default='',
+    unique=True, 
   )
 
   user_name = models.CharField(
@@ -66,7 +67,7 @@ class User_Followers(models.Model):
   user_id = models.CharField(
     verbose_name='user_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
   )
@@ -88,7 +89,7 @@ class User_Followings(models.Model):
   user_id = models.CharField(
     verbose_name='user_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
   )
@@ -112,7 +113,7 @@ class User_Strict_Information (models.Model):
   user_id = models.CharField(
     verbose_name='user_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=25,
     default='',
   )
@@ -158,7 +159,6 @@ class Post (models.Model):
   user_id = models.CharField(
     verbose_name='user_id',
     blank=True,
-    null=True,
     max_length=30,
     default='',
   )
@@ -166,9 +166,10 @@ class Post (models.Model):
   post_id = models.CharField(
     verbose_name='post_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
+    unique=True, 
   )
 
   post = models.FileField(
@@ -256,7 +257,7 @@ class Post_Comments (models.Model):
   post_id = models.CharField(
     verbose_name='post_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
   )
@@ -295,7 +296,7 @@ class Post_Loved (models.Model):
   post_id = models.CharField(
     verbose_name='post_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
   )
@@ -327,9 +328,10 @@ class Playlist (models.Model):
   playlist_id = models.CharField(
     verbose_name='playlist_id',
     blank=True,
-    null=True,
+    primary_key=True, 
     max_length=30,
     default='',
+    unique=True, 
   )
 
   playlist_title = models.CharField(
@@ -346,6 +348,8 @@ class Playlist (models.Model):
     null=True,
     upload_to='playlist_images/',
   )
+
+  posts = models.ManyToManyField(Post, through='PlaylistPosts')
 
   public = models.BooleanField(
     verbose_name='public',
@@ -397,11 +401,11 @@ class Playlist (models.Model):
   )
 
   def __str__(self):
-    return self.play_list_id
+    return self.playlist_id
   
 class PlaylistPosts (models.Model):
-  playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
-  post = models.ForeignKey(Post, on_delete=models.CASCADE)
+  playlist = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
+  post = models.ForeignKey(Post, to_field='post_id', db_column='post_id', on_delete=models.CASCADE)
 
 class Playlist_Comments (models.Model):
   class meta:

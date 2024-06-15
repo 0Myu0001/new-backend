@@ -56,3 +56,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     model = Notification
     fields = '__all__'
 
+class PlaylistPostsSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = PlaylistPosts
+    fields = '__all__'
