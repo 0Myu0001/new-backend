@@ -59,7 +59,6 @@ class User_Strict_InformationApi (viewsets.ModelViewSet):
 class PostApi (viewsets.ModelViewSet):
   queryset = Post.objects.all()
   serializer_class = PostSerializer
-  lookup_field = 'post_id'
 
   def get_queryset(self):
     queryset = Post.objects.all()
@@ -102,6 +101,17 @@ class PlaylistApi (viewsets.ModelViewSet):
     user_id = self.request.query_params.get('user_id')
     if user_id is not None:
       queryset = queryset.filter(user_id=user_id)
+    return queryset
+
+class PlaylistPostsApi (viewsets.ModelViewSet):
+  queryset = PlaylistPosts.objects.all()
+  serializer_class = PlaylistPostsSerializer
+
+  def get_queryset(self):
+    queryset = PlaylistPosts.objects.all()
+    playlist_id = self.request.query_params.get('playlist_id')
+    if playlist_id is not None:
+      queryset = queryset.filter(playlist_id=playlist_id)
     return queryset
 
 class Playlist_CommentsApi (viewsets.ModelViewSet):
@@ -181,3 +191,4 @@ router.register(r'playlist', PlaylistApi)
 router.register(r'playlist_comments', Playlist_CommentsApi)
 router.register(r'playlist_loved', Playlist_LovedApi)
 router.register(r'notification', NotificationApi)
+router.register(r'playlist_posts', PlaylistPostsApi)
