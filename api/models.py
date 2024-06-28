@@ -64,13 +64,7 @@ class User (models.Model):
 class User_Followers(models.Model):
   class Meta:
     db_table = 'user_followers'
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   follower_id = models.CharField(
     verbose_name='follower_id',
@@ -110,13 +104,7 @@ class User_Strict_Information (models.Model):
   class meta:
     db_table = 'user_strict_information'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    primary_key=True, 
-    max_length=25,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   user_email = models.CharField(
     verbose_name='user_email',
@@ -156,12 +144,7 @@ class Post (models.Model):
   class meta:
     db_table = 'post'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   post_id = models.CharField(
     verbose_name='post_id',
@@ -246,13 +229,7 @@ class Post_Comments (models.Model):
   class meta:
     db_table = 'post_comments'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   post_id = models.CharField(
     verbose_name='post_id',
@@ -285,21 +262,9 @@ class Post_Loved (models.Model):
   class meta:
     db_table = 'post_loved'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
-  post_id = models.CharField(
-    verbose_name='post_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-  )
+  post_id = models.ForeignKey(Post, to_field='post_id', db_column='post_id', on_delete=models.CASCADE)
 
   loved_by_user_id = models.CharField(
     verbose_name='loved_by_user_id',
@@ -317,13 +282,7 @@ class Playlist (models.Model):
   class meta:
     db_table = 'playlist'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   playlist_id = models.CharField(
     verbose_name='playlist_id',
@@ -411,21 +370,9 @@ class Playlist_Comments (models.Model):
   class meta:
     db_table = 'playlist_comments'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
-  playlist_id = models.CharField(
-    verbose_name='playlist_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  playlist_id = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
 
   comment_id = models.CharField(
     verbose_name='comment_id',
@@ -450,21 +397,9 @@ class Playlist_Loved (models.Model):
   class meta:
     db_table = 'playlist_loved'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
-  playlist_id = models.CharField(
-    verbose_name='playlist_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  playlist_id = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
 
   loved_by_user_id = models.CharField(
     verbose_name='loved_by_user_id',
@@ -482,13 +417,7 @@ class Notification (models.Model):
   class meta:
     db_table = 'notification'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   notification_id = models.CharField(
     verbose_name='notification_id',
