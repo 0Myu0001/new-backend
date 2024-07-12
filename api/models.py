@@ -80,13 +80,7 @@ class User_Followers(models.Model):
 class User_Followings(models.Model):
   class Meta:
     db_table = 'user_followings'
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-  )
+    user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
 
   following_id = models.CharField(
     verbose_name='following_id',
