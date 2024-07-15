@@ -6,34 +6,39 @@ class UserSerializer(serializers.ModelSerializer):
     model = User
     fields = '__all__'
 
-class User_FollowersSerializer(serializers.ModelSerializer):
+class UserInformationSerializer(serializers.ModelSerializer):
   class Meta:
-    model = User_Followers
+    model = UserInformation
     fields = '__all__'
 
-class User_FollowingsSerializer(serializers.ModelSerializer):
+class UserFollowSerializer(serializers.ModelSerializer):
   class Meta:
-    model = User_Followings
+    model = UserFollow
     fields = '__all__'
 
-class User_Strict_InformationSerializer(serializers.ModelSerializer):
+class UserFollowerSerializer(serializers.ModelSerializer):
   class Meta:
-    model = User_Strict_Information
+    model = UserFollower
     fields = '__all__'
 
-class PostSerializer(serializers.ModelSerializer):
+class MusicSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Post
+    model = Music
     fields = '__all__'
 
-class Post_CommentsSerializer(serializers.ModelSerializer):
+class MusicLikedSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Post_Comments
+    model = MusicLiked
     fields = '__all__'
 
-class Post_LovedSerializer(serializers.ModelSerializer):
+class MusicCommentsSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Post_Loved
+    model = MusicComments
+    fields = '__all__'
+
+class MusicContributeSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = MusicContribute
     fields = '__all__'
 
 class PlaylistSerializer(serializers.ModelSerializer):
@@ -41,22 +46,22 @@ class PlaylistSerializer(serializers.ModelSerializer):
     model = Playlist
     fields = '__all__'
 
-class Playlist_CommentsSerializer(serializers.ModelSerializer):
+class PlaylistMusicSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Playlist_Comments
+    model = PlaylistMusic
     fields = '__all__'
 
-class Playlist_LovedSerializer(serializers.ModelSerializer):
+class PlaylistLikedSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Playlist_Loved
+    model = PlaylistLiked
     fields = '__all__'
 
-class NotificationSerializer(serializers.ModelSerializer):
+class PlaylistContributeSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Notification
+    model = PlaylistContribute
     fields = '__all__'
 
-class PlaylistPostsSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = PlaylistPosts
-    fields = '__all__'
+# class PlaylistCommentsSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = PlaylistComments
+#     fields = '__all__'

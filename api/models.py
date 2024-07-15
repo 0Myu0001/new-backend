@@ -1,440 +1,134 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-# Create your models here.
-class User (models.Model):
-  class meta:
+class User(models.Model):
+  class Meta:
+    managed = False
     db_table = 'user'
 
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    primary_key=True, 
-    max_length=25,
-    default='',
-    unique=True, 
-  )
+  user_id = models.CharField(primary_key=True, max_length=32)
+  user_name = models.CharField(max_length=32)
+  user_image = models.ImageField()
 
-  user_name = models.CharField(
-    verbose_name='user_name',
-    blank=True,
-    null=True,
-    max_length=25,
-    default='',
-  )
-
-  user_email = models.CharField(
-    verbose_name='user_email',
-    blank=True,
-    null=True,
-    max_length=254,
-    default='',
-  )
-
-  user_image = models.ImageField(
-    verbose_name='user_image',
-    blank=True,
-    null=True,
-    upload_to='user_images/',
-  )
-
-  follower_number = models.IntegerField(
-    verbose_name='follower_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  following_number = models.IntegerField(
-    verbose_name='following_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-  
-  listened_number = models.IntegerField(
-    verbose_name='listened_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  def __str__(self):
-    return self.user_id
-  
-class User_Followers(models.Model):
+class UserInformation(models.Model):
   class Meta:
-    db_table = 'user_followers'
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
+    managed = False
+    db_table = 'user_information'
 
-  follower_id = models.CharField(
-    verbose_name='follower_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  user = models.OneToOneField(User, models.DO_NOTHING, primary_key=True)
+  user_email = models.CharField(max_length=45)
+  user_password = models.CharField(max_length=45)
 
-  def __str__(self):
-    return self.user_id
-  
-class User_Followings(models.Model):
+class UserFollow(models.Model):
   class Meta:
-    db_table = 'user_followings'
+    managed = False
+    db_table = 'user_follow'
+
+  user = models.OneToOneField(User, models.DO_NOTHING, primary_key=True)
+  following_user_id = models.CharField(unique=True, max_length=32)
+
+class UserFollower(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'user_follower'
   
-  user_id = models.CharField(
-    verbose_name='user_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-  )
-  
-  following_id = models.CharField(
-    verbose_name='following_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  def __str__(self):
-    return self.user_id
+  user = models.OneToOneField(User, models.DO_NOTHING, primary_key=True)
+  followed_user_id = models.CharField(unique=True, max_length=32)
 
 
-class User_Strict_Information (models.Model):
-  class meta:
-    db_table = 'user_strict_information'
+class Music(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'music'
 
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
+  music_id = models.AutoField(primary_key=True)
+  user = models.ForeignKey('User', models.DO_NOTHING)
+  music_title = models.CharField(max_length=45)
+  music_image = models.ImageField()
+  music = models.FileField()
+  music_detail = models.TextField(blank=True, null=True)
 
-  user_email = models.CharField(
-    verbose_name='user_email',
-    blank=True,
-    null=True,
-    max_length=254,
-    default='',
-  )
+class MusicLiked(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'music_liked'
+    unique_together = (('user', 'music'),)
 
-  user_phone_number = models.CharField(
-    verbose_name='user_phone_number',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  music = models.ForeignKey(Music, models.DO_NOTHING)
+  user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)  
 
-  user_birth = models.DateField(
-    verbose_name='user_birth',
-    blank=True,
-    null=True,
-  )
+class MusicComments(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'music_comments'
+    unique_together = (('user', 'music'),)
 
-  user_password = models.CharField(
-    verbose_name='user_password',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  music = models.ForeignKey(Music, models.DO_NOTHING)
+  user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)  
+  comment = models.TextField()
 
-  def __str__(self):
-    return self.user_id
+class MusicContribute(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'music_contribute'
+    unique_together = (('user', 'music'),)
 
-
-class Post (models.Model):
-  class meta:
-    db_table = 'post'
-
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
-
-  post_id = models.CharField(
-    verbose_name='post_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-    unique=True, 
-  )
-
-  post = models.FileField(
-    verbose_name='post',
-    blank=True,
-    null=True,
-    upload_to='posts/',
-  )
-
-  post_title = models.CharField(
-    verbose_name='post_title',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  post_image = models.ImageField(
-    verbose_name='post_image',
-    blank=True,
-    null=True,
-    upload_to='images/',
-  )
-
-  post_played_times = models.IntegerField(
-    verbose_name='post_played_times',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  post_loved_number = models.IntegerField(
-    verbose_name='post_loved_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  post_comment_number = models.IntegerField(
-    verbose_name='post_comment_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  post_saved_number = models.IntegerField(
-    verbose_name='post_saved_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  post_detail = models.CharField(
-    verbose_name='post_detail',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  post_tags = models.CharField(
-    verbose_name='post_tags',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-    return self.post_id
+  music = models.ForeignKey(Music, models.DO_NOTHING)
+  user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)  
 
 
-class Post_Comments (models.Model):
-  class meta:
-    db_table = 'post_comments'
-
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
-
-  post_id = models.CharField(
-    verbose_name='post_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-  )
-
-  comment_id = models.CharField(
-    verbose_name='comment_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  comment_content = models.CharField(
-    verbose_name='comment_content',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-      return self.comment_id
-  
-class Post_Loved (models.Model):
-  class meta:
-    db_table = 'post_loved'
-
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
-
-  post_id = models.ForeignKey(Post, to_field='post_id', db_column='post_id', on_delete=models.CASCADE)
-
-  loved_by_user_id = models.CharField(
-    verbose_name='loved_by_user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  def __str__(self):
-    return self.post_id
-
-
-class Playlist (models.Model):
-  class meta:
+class Playlist(models.Model):
+  class Meta:
+    managed = False
     db_table = 'playlist'
 
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
+  playlist_id = models.AutoField(primary_key=True)
+  user = models.OneToOneField('User', models.DO_NOTHING)
+  playlist_title = models.CharField(max_length=45)
+  playlist_image = models.ImageField()
+  public = models.IntegerField()
+  playlist_detail = models.TextField(blank=True, null=True)
 
-  playlist_id = models.CharField(
-    verbose_name='playlist_id',
-    blank=True,
-    primary_key=True, 
-    max_length=30,
-    default='',
-    unique=True, 
-  )
+class PlaylistMusic(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'playlist_music'
+    unique_together = (('music', 'playlist'),)
 
-  playlist_title = models.CharField(
-    verbose_name='playlist_name',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  music = models.OneToOneField(Music, models.DO_NOTHING, primary_key=True) 
+  playlist = models.ForeignKey(Playlist, models.DO_NOTHING) 
 
-  playlist_image = models.ImageField(
-    verbose_name='playlist_image',
-    blank=True,
-    null=True,
-    upload_to='playlist_images/',
-  )
+class PlaylistLiked(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'playlist_liked'
+    unique_together = (('playlist', 'user'),)
 
-  posts = models.ManyToManyField(Post, through='PlaylistPosts')
+  playlist = models.OneToOneField(Playlist, models.DO_NOTHING, primary_key=True)  
+  user = models.ForeignKey('User', models.DO_NOTHING)
 
-  public = models.BooleanField(
-    verbose_name='public',
-    default=True,
-  )
-
-  playlist_played_times = models.IntegerField(
-    verbose_name='playlist_played_times',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  playlist_loved_number = models.IntegerField(
-    verbose_name='playlist_loved_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  playlist_comment_number = models.IntegerField(
-    verbose_name='playlist_comment_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  playlist_saved_number = models.IntegerField(
-    verbose_name='playlist_saved_number',
-    blank=True,
-    null=True,
-    default=0,
-  )
-
-  playlist_detail = models.CharField(
-    verbose_name='playlist_detail',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  playlist_attributes = models.CharField(
-    verbose_name='playlist_attributes',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-    return self.playlist_id
-  
-class PlaylistPosts (models.Model):
-  playlist = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
-  post = models.ForeignKey(Post, to_field='post_id', db_column='post_id', on_delete=models.CASCADE)
-
-class Playlist_Comments (models.Model):
-  class meta:
+class PlaylistComments(models.Model):
+  class Meta:
+    managed = False
     db_table = 'playlist_comments'
+    unique_together = (('playlist', 'user'),)
 
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
+  playlist = models.OneToOneField(Playlist, models.DO_NOTHING, primary_key=True)  
+  user = models.ForeignKey('User', models.DO_NOTHING)
+  comment = models.TextField()
 
-  playlist_id = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
+class PlaylistContribute(models.Model):
+  class Meta:
+    managed = False
+    db_table = 'playlist_contribute'
+    unique_together = (('playlist', 'user'),)
 
-  comment_id = models.CharField(
-    verbose_name='comment_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
+  playlist = models.OneToOneField(Playlist, models.DO_NOTHING, primary_key=True)  
+  user = models.ForeignKey('User', models.DO_NOTHING)
 
-  comment_content = models.CharField(
-    verbose_name='comment_content',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-    return self.comment_id
-
-class Playlist_Loved (models.Model):
-  class meta:
-    db_table = 'playlist_loved'
-
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
-
-  playlist_id = models.ForeignKey(Playlist, to_field='playlist_id', db_column='playlist_id', on_delete=models.CASCADE)
-
-  loved_by_user_id = models.CharField(
-    verbose_name='loved_by_user_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  def __str__(self):
-    return self.playlist_id  
-
-
-class Notification (models.Model):
-  class meta:
-    db_table = 'notification'
-
-  user_id = models.ForeignKey(User, to_field='user_id', db_column='user_id', on_delete=models.CASCADE)
-
-  notification_id = models.CharField(
-    verbose_name='notification_id',
-    blank=True,
-    null=True,
-    max_length=30,
-    default='',
-  )
-
-  notification_content = models.CharField(
-    verbose_name='notification_content',
-    blank=True,
-    null=True,
-    max_length=1000,
-    default='',
-  )
-
-  def __str__(self):
-    return self.notification_id
