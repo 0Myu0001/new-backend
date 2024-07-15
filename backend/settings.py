@@ -90,7 +90,7 @@ DATABASES = {
         "PORT": '4000',
         "USER": '21r9f92KFmZRH1j.root',
         "PASSWORD": 'j84kR5fWKcbbIivM',
-        "NAME": 'test',
+        "NAME": 'mydb',
     }
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
