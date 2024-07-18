@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserApi(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = UserSerializer
   lookup_field = 'user_id'
@@ -40,7 +40,7 @@ class UserViewSet(viewsets.ModelViewSet):
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class UserInformationViewSet(viewsets.ModelViewSet):
+class UserInformationApi(viewsets.ModelViewSet):
   queryset = UserInformation.objects.all()
   serializer_class = UserInformationSerializer
   lookup_field = 'user'
@@ -74,7 +74,7 @@ class UserInformationViewSet(viewsets.ModelViewSet):
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class UserFollowViewSet(viewsets.ModelViewSet):
+class UserFollowApi(viewsets.ModelViewSet):
   queryset = UserFollow.objects.all()
   serializer_class = UserFollowSerializer
   lookup_field = 'user'
@@ -108,7 +108,7 @@ class UserFollowViewSet(viewsets.ModelViewSet):
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class UserFollowerViewSet(viewsets.ModelViewSet):
+class UserFollowerApi(viewsets.ModelViewSet):
   queryset = UserFollower.objects.all()
   serializer_class = UserFollowerSerializer
   lookup_field = 'user'
@@ -142,7 +142,7 @@ class UserFollowerViewSet(viewsets.ModelViewSet):
     user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class MusicViewSet(viewsets.ModelViewSet):
+class MusicApi(viewsets.ModelViewSet):
   queryset = Music.objects.all()
   serializer_class = MusicSerializer
   lookup_field = 'music_id'
@@ -176,7 +176,7 @@ class MusicViewSet(viewsets.ModelViewSet):
     music.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class MusicLikedViewSet(viewsets.ModelViewSet):
+class MusicLikedApi(viewsets.ModelViewSet):
   queryset = MusicLiked.objects.all()
   serializer_class = MusicLikedSerializer
 
@@ -202,7 +202,7 @@ class MusicLikedViewSet(viewsets.ModelViewSet):
     music_liked.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class MusicCommentsViewSet(viewsets.ModelViewSet):
+class MusicCommentsApi(viewsets.ModelViewSet):
   queryset = MusicComments.objects.all()
   serializer_class = MusicCommentsSerializer
 
@@ -229,7 +229,7 @@ class MusicCommentsViewSet(viewsets.ModelViewSet):
     music_comment.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class MusicContributeViewSet(viewsets.ModelViewSet):
+class MusicContributeApi(viewsets.ModelViewSet):
   queryset = MusicContribute.objects.all()
   serializer_class = MusicContributeSerializer
 
@@ -255,7 +255,7 @@ class MusicContributeViewSet(viewsets.ModelViewSet):
     music_contribute.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class PlaylistViewSet(viewsets.ModelViewSet):
+class PlaylistApi(viewsets.ModelViewSet):
   queryset = Playlist.objects.all()
   serializer_class = PlaylistSerializer
   lookup_field = 'playlist_id'
@@ -289,7 +289,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     playlist.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class PlaylistMusicViewSet(viewsets.ModelViewSet):
+class PlaylistMusicApi(viewsets.ModelViewSet):
   queryset = PlaylistMusic.objects.all()
   serializer_class = PlaylistMusicSerializer
 
@@ -315,7 +315,7 @@ class PlaylistMusicViewSet(viewsets.ModelViewSet):
     playlist_music.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class PlaylistLikedViewSet(viewsets.ModelViewSet):
+class PlaylistLikedApi(viewsets.ModelViewSet):
   queryset = PlaylistLiked.objects.all()
   serializer_class = PlaylistLikedSerializer
 
@@ -341,7 +341,7 @@ class PlaylistLikedViewSet(viewsets.ModelViewSet):
     music_liked.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
   
-class PlaylistContributeViewSet(viewsets.ModelViewSet):
+class PlaylistContributeApi(viewsets.ModelViewSet):
   queryset = PlaylistContribute.objects.all()
   serializer_class = PlaylistContributeSerializer
 
@@ -837,15 +837,15 @@ from rest_framework import routers
 from .views import *
 
 router = routers.DefaultRouter()
-router.register('user', UserViewSet)
-router.register('user_information', UserInformationViewSet)
-router.register('user_follow', UserFollowViewSet)
-router.register('user_follower', UserFollowerViewSet)
-router.register('music', MusicViewSet)
-router.register('music_liked', MusicLikedViewSet)
-router.register('music_comments', MusicCommentsViewSet)
-router.register('music_contribute', MusicContributeViewSet)
-router.register('playlist', PlaylistViewSet)
+router.register('user', UserApi)
+router.register('user_information', UserInformationApi)
+router.register('user_follow', UserFollowApi)
+router.register('user_follower', UserFollowerApi)
+router.register('music', MusicApi)
+router.register('music_liked', MusicLikedApi)
+router.register('music_comments', MusicCommentsApi)
+router.register('music_contribute', MusicContributeApi)
+router.register('playlist', PlaylistApi)
 
 urlpatterns = router.urls
 
