@@ -16,6 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -91,6 +92,11 @@ DATABASES = {
         "USER": '21r9f92KFmZRH1j.root',
         "PASSWORD": 'j84kR5fWKcbbIivM',
         "NAME": 'mydb',
+        "OPTIONS": {
+            "ssl": {
+                "ca": os.path.join(BASE_DIR, "/etc/ssl/cert.pem"),
+            },
+        },
     }
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
